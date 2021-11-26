@@ -25,16 +25,12 @@ services:
       - FIRST=${FIRST}
       - LAST=${LAST}
       - PASSWORD=${PASSWORD}
-      - RESOURCES=${RESOURCES}
 
     env_file:
       - ./confs/tyk_analytics.env
 
     ports:
       - "${DASHBOARD_MACHINE_PORT}:${DASHBOARD_PORT}"
-
-    volumes:
-      - ./resources:/opt/tyk-dashboard/resources
 
     networks:
       - tyk

@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  tyk-dashboard:
+    environment:
+      - TYK_DB_TYKAPI_HOST=https://tyk-gateway
+      - TYK_DB_HOSTCONFIG_HOSTNAME=gateway.tyk.local
+      - TYK_DB_HOSTCONFIG_GATEWAYHOSTNAME=gateway.tyk.local:${GATEWAY_PORT}
+      - TYK_DB_HTTPSERVEROPTIONS_USESSL=true
+      - TYK_DB_HTTPSERVEROPTIONS_SSLINSECURESKIPVERIFY=true
+      - TYK_DB_HOSTCONFIG_GENERATEHTTPS=true
+
+    volumes:
+      - ./integrations/security/tyk-ssl/certs/tyk.local.crt:/etc/ssl/certs/tyk.local.crt
+      - ./integrations/security/tyk-ssl/certs/tyk.local.key:/etc/ssl/certs/tyk.local.key
+      - ./integrations/security/tyk-ssl/confs/tyk_analytics.conf:/opt/tyk-dashboard/tyk_analytics.conf
+
+  tyk-gateway:
+    environment:
+      - TYK_GW_POLICIES_POLICYCONNECTIONSTRING=https://tyk-dashboard:${DASHBOARD_PORT}
+      - TYK_GW_DBAPPCONFOPTIONS_CONNECTIONSTRING=https://tyk-dashboard:${DASHBOARD_PORT}
+      - TYK_GW_HTTPSERVEROPTIONS_USESSL=true
+      - TYK_GW_HTTPSERVEROPTIONS_SSLINSECURESKIPVERIFY=true
+
+    volumes:
+      - ./integrations/security/tyk-ssl/certs/tyk.local.crt:/etc/ssl/certs/tyk.local.crt
+      - ./integrations/security/tyk-ssl/certs/tyk.local.key:/etc/ssl/certs/tyk.local.key
+      - ./integrations/security/tyk-ssl/confs/tyk.conf:/opt/tyk-gateway/tyk.conf

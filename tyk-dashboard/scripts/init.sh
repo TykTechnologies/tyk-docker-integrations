@@ -1,10 +1,5 @@
 # Start Tyk Dashboard.
-if [ "$1" = "dev" ]; then
-  echo "Development mode selected"
-  go run main.go &
-else
-  /opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf &
-fi
+/opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf &
 
 # Wait for dashboard to open connection.
 /bin/wait-for-it.sh -t 300 localhost:$TYK_DB_LISTENPORT
@@ -86,60 +81,12 @@ curl -X PUT localhost:$TYK_DB_LISTENPORT/api/portal/cname \
     \"cname\": \"\"
   }"
 
-# Create second Org.
-ORG=`curl -X POST localhost:$TYK_DB_LISTENPORT/admin/organisations \
-  --header "admin-auth: 12345" \
-  --data "{
-    \"owner_name\": \"Test Organisation 1\",
-    \"owner_slug\": \"test.organisation1\",
-    \"cname\": \"test.organisation1\",
-    \"cname_enabled\": true
-  }" | \
-  jq -r '.Meta'`
-
-# Create a new admin user and get user access token.
-USERID=`curl -X POST localhost:$TYK_DB_LISTENPORT/admin/users \
-  --header "admin-auth: 12345" \
-  --data "{
-    \"org_id\": \"$ORG\",
-    \"first_name\": \"Org 1\",
-    \"last_name\": \"Admin\",
-    \"email_address\": \"admin.org1@tyk.io\",
-    \"active\": true,
-    \"user_permissions\": { \"IsAdmin\": \"admin\" }
-  }" | \
-  jq -r '.Meta.id'`
-
-# Set users password.
-curl -X PUT localhost:$TYK_DB_LISTENPORT/admin/users/$USERID \
-  --header "admin-auth: 12345" \
-  --data "{
-    \"org_id\": \"$ORG\",
-    \"first_name\": \"Org 1\",
-    \"last_name\": \"Admin\",
-    \"email_address\": \"admin.org1@tyk.io\",
-    \"password\": \"$PASSWORD\",
-    \"active\": true,
-    \"user_permissions\": { \"IsAdmin\": \"admin\" }
-  }"
-
 # Overwrite init script.
-if [ "$1" = "dev" ]; then
-  echo "go run main.go" > /bin/start.sh
-else
-  echo "/opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf" > /bin/start.sh
-fi
+echo "/opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf" > /bin/start.sh
 
 echo "\nRestarting Dashboard...\n"
 echo TYK_TOKEN="$TOKEN" >> $HOME/.bashrc
 
-bash /opt/tyk-dashboard/resources/apply.sh
-
 # Restart Tyk Dashboard
-if [ "$1" = "dev" ]; then
-  kill `ps | grep "go run main.go" | awk '{ print $1 }'`
-  go run main.go
-else
-  kill `ps | grep "tyk-analytics" | awk '{ print $1 }'`
-  /opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf
-fi
+kill `ps | grep "tyk-analytics" | awk '{ print $1 }'`
+/opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf

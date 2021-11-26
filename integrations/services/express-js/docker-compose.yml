@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  express-js:
+    build:
+      context: .
+      dockerfile: ./integrations/services/express-js/Dockerfile
+
+    container_name: express-js
+
+    volumes:
+      - ./integrations/services/express-js/src/index.js:/var/www/index.js
+      - ./integrations/services/express-js/src/package.json:/var/www/package.json
+      - ./integrations/services/express-js/src/package-lock.json:/var/www/package-lock.json
+
+    ports:
+      - "3030:3030"
+
+    networks:
+      - tyk

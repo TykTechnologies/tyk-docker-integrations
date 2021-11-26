@@ -7,34 +7,30 @@ A repo for Tyk Pro with different platforms demos.
 
 ## Getting Started
 1. Clone repo and navigate to the repo directory.
-2. Run initalization script to initialize environment `sh scripts/init.sh` and follow the onscreen instructions to add your license key.
+2. Copy `.env.example` into `.env` and fill the `TYK_LICENSE_KEY` value with the Tyk license key.
 3. Run docker-compose using the following command `docker-compose -f docker-compose.yml up`.<br />
-**NOTE:** This will only run the Tyk Pro tools. If you want to run any of the other demos please check out the readme file inside their respective folders.
+**NOTE:** This will only run the Tyk Pro services. If you want to run any of the other integrations please check out the readme file inside their respective folders.
 4. Navigate to [http://localhost:3000](http://localhost:3000) in your browser to access the Tyk Dashboard, and login with the email and password in `.env`
 
 ## Integrations
-- Databases `demos/databases`
+- Databases `integrations/databases`
     - **ElastiCache Redis Cluster** `/elasticache-redis-cluster`
     - **Postgres** `/postgres`
 
-- Deployments `demos/deployments`
+- Deployments `integrations/deployments`
     - **ACI** `/aci`
 
-- Portal `demos/portal`
+- Portal `integrations/portal`
     - **Custom Templates** `/custom-templates`
 
-- Pumps `demos/pumps`
+- Pumps `integrations/pumps`
     - **Datadog** `/datadog`
     - **Prometheus** `/prometheus`
 
-- Security `demos/security`
+- Security `integrations/security`
     - **HMAC Upstream** `/hmac-upstream`
     - **Internal Auth** `/internal-auth`
     - **Tyk self-signed certs SSL Setup** `/tyk-ssl`
 
-- Services `demos/services`
+- Services `integrations/services`
     - **Express.js** `/express-js`
-    
-## Development Modes `development` 
-  - **Dashboard** `/dashboard`
-  - **Portal** `/portal`

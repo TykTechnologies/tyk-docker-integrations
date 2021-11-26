@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  tyk-pump:
+    environment:
+      - TYK_PMP_PUMPS_PROMETHEUS_TYPE=prometheus
+      - TYK_PMP_PUMPS_PROMETHEUS_META_ADDR=0.0.0.0:9091
+      - TYK_PMP_PUMPS_PROMETHEUS_META_PATH=/metrics
+
+  prometheus:
+    build:
+      context: .
+      dockerfile: ./integrations/pumps/prometheus/Dockerfile
+
+    container_name: prometheus
+
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.enable-admin-api
+
+    ports:
+      - "9090:9090"
+
+    networks:
+      - tyk

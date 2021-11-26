@@ -1,0 +1,6 @@
+version: '3.9'
+
+services:
+  tyk-dashboard:
+    volumes:
+      - ./integrations/portal/custom-templates/src/customTemplate.html:/opt/tyk-dashboard/portal/templates/customTemplate.html
