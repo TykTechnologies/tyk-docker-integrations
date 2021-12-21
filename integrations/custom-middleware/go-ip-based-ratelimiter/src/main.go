@@ -39,8 +39,8 @@ func IPRateLimiter(rw http.ResponseWriter, r *http.Request) {
   apiId := requestedAPI.APIID
 
   // Set auth header
-  r.Header.Add("x-tyk-authorization", realIp)
-  logger.Debug("Setting x-tyk-authorization to ", realIp)
+  r.Header.Add("Authorization", realIp)
+  logger.Debug("Setting Authorization to ", realIp)
 
   ipSession := &user.SessionState{
     OrgID: orgId,
