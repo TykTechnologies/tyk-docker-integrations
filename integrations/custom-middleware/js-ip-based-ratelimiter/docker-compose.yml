@@ -1,0 +1,6 @@
+version: '3.9'
+services:
+
+  tyk-gateway:
+    volumes:
+      - ./integrations/custom-middleware/js-ip-based-ratelimiter/src/middleware/ipRateLimiter.js:/etc/middleware/ipRateLimiter.js
