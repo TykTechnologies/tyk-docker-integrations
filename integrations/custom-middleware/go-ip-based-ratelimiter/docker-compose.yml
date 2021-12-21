@@ -1,0 +1,6 @@
+version: '3.9'
+services:
+
+  tyk-gateway:
+    volumes:
+      - ./integrations/custom-middleware/go-ip-based-ratelimiter/src/ipRateLimiter.so:/etc/middleware/ipRateLimiter.so

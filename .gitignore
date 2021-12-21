@@ -6,3 +6,6 @@
 **/*.key
 **/*.csr
 **/*.crt
+**/.idea
+**/vendor
+**/*.sum
