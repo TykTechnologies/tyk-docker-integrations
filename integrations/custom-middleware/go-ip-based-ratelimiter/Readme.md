@@ -3,7 +3,7 @@
 
 2. Run the following command to allow go to install all the plugin dependencies: ```docker run --rm -v `pwd`/integrations/custom-middleware/go-ip-based-ratelimiter/src/:/go/ipRateLimiter/ go-ip-limiter-plugin```
 
-3. Generate ```docker run --rm -v `pwd`/integrations/custom-middleware/go-ip-based-ratelimiter/src/:/plugin-source tykio/tyk-plugin-compiler:v3.0.8 ipRateLimiter.so```
+3. Generate ```docker run --rm -v `pwd`/integrations/custom-middleware/go-ip-based-ratelimiter/src/:/plugin-source tykio/tyk-plugin-compiler:v4.0.0-rc18 ipRateLimiter.so```
 
 4. Run docker-compose from the repo root using the following command `docker-compose -f docker-compose.yml -f integrations/custom-middleware/go-ip-based-ratelimiter/docker-compose.yml up`.
 
