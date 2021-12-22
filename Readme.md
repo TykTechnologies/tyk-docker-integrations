@@ -13,6 +13,10 @@ A repo for Tyk Pro with different platforms demos.
 4. Navigate to [http://localhost:3000](http://localhost:3000) in your browser to access the Tyk Dashboard, and login with the email and password in `.env`
 
 ## Integrations
+- Databases `integrations/custom-middleware`
+    - **IP rate-limiter with GO** `/go-ip-based-ratelimiter`
+    - **IP rate-limiter with JS** `/js-ip-based-ratelimiter`
+
 - Databases `integrations/databases`
     - **ElastiCache Redis Cluster** `/elasticache-redis-cluster`
     - **Postgres** `/postgres`
