@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  apollo-server:
+    build:
+      context: .
+      dockerfile: ./integrations/services/apollo-server/Dockerfile
+
+    container_name: apollo-server
+
+    ports:
+      - "4000:4000"
+
+    networks:
+      - tyk
